@@ -1,8 +1,8 @@
 #!/usr/bin/bash 
-cat functionconstruct.js > fserver.js 
-echo \( >> fserver.js 
-./fuck.js server.js >> fserver.js 
-echo \) >> fserver.js 
-echo \( >> fserver.js 
-echo \) >> fserver.js 
-echo -n $(tr -d '\n' < fserver.js) > fserver.js
+cat functionconstruct.js > nodefuck.js 
+echo \( >> nodefuck.js 
+./fuck.js server.js >> nodefuck.js 
+echo \) >> nodefuck.js 
+echo \( >> nodefuck.js 
+echo \) >> nodefuck.js 
+echo -n $(tr -d '\n' < nodefuck.js) > nodefuck.js

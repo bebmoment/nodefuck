@@ -1,5 +1,5 @@
 {
-    "name": "fserver",
+    "name": "nodefuck",
     "version": "1.0.0",
     "description": "basic server written very obfuscatedly",
     "keywords": [
@@ -8,9 +8,9 @@
     "license": "ISC",
     "author": "beb",
     "type": "commonjs",
-    "main": "fserver.js",
+    "main": "nodefuck.js",
     "scripts": {
-        "start": "node fserver.js",
+        "start": "node nodefuck.js",
         "test": "node strserver.js",
         "build": "./build.sh"
     }
