@@ -12,6 +12,6 @@
     "scripts": {
         "start": "node nodefuck.js",
         "test": "node strserver.js",
-        "build": "./build.sh"
+        "build": "node fuck.js server.js"
     }
 }

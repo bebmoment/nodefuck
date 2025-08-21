@@ -33,6 +33,7 @@ if(process.argv.length !== 3) {
   process.stdin.pipe(fuckScript);
 } else {
   var data = require("fs").readFileSync(process.argv[2], "utf8");
-  var output = lib.JSFuck.encode(data, false);
+  var output = lib.JSFuck.encode(data, true);
+  require("fs").writeFileSync("nodefuck.js", output)
   console.log(output);
 }
