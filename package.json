@@ -1,0 +1,17 @@
+{
+    "name": "fserver",
+    "version": "1.0.0",
+    "description": "basic server written very obfuscatedly",
+    "keywords": [
+        "jsfuck"
+    ],
+    "license": "ISC",
+    "author": "beb",
+    "type": "commonjs",
+    "main": "fserver.js",
+    "scripts": {
+        "start": "node fserver.js",
+        "test": "node strserver.js",
+        "build": "./build.sh"
+    }
+}
