@@ -46,8 +46,8 @@ const mapping = (c) => (isNaN(c)) ? `(${SIMPLE[minKeyFinder(c)]}+[])[${fuckedNum
 
 const balls = (c) => (!isNaN(c)) ? mapping(c) : (c in SIMPLE) ? SIMPLE[c] : Object.assign(SIMPLE, Object.fromEntries([[c, mapping(c)]]))[c]; // BIG SAUCE: map but with a check - improve for numbers please
 const mapLn = (str) => str.split('').map((c) => balls(c)).join('+'); // also the sauce
-const set = new Set(Object.keys(SIMPLE).join(''))
-// console.log([...set].map(element => balls(element)), SIMPLE);
+const set = new Set(Object.keys(SIMPLE).join(''));
+[...set].map(element => balls(element));
 // if i got rid of the helper functions' implicit dependence on SIMPLE, these could be less repetitive, because the helper functions are really just string searchers
 // search the word function
 Object.assign(SIMPLE, {'c': `([][${mapLn('at')}]+[])[${balls(3)}]`});
@@ -67,12 +67,10 @@ Object.assign(SIMPLE, {'g': `(([]+[])[${mapLn('constructor')}]+[])[${mapLn('14')
 // sketchy way of getting v and d from native code - hard to access
 Object.assign(SIMPLE, {'v': `([][${mapLn('at')}]+[])[${mapLn('25')}]`});
 Object.assign(SIMPLE, {'d': `([][${mapLn('at')}]+[])[${mapLn('30')}]`});
-
+const jtoString = `${mapLn('to')}+([]+[])[${mapLn('constructor')}][${mapLn('name')}]`
 for (let i = 10; i < 36; i++) {
   if (!(i.toString(36) in SIMPLE)) {
-    Object.assign(SIMPLE, {[`${i.toString(36)}`]: `${mapLn(i.toString())}[${mapLn('toString')}](${mapLn('36')})`}); 
+    Object.assign(SIMPLE, {[`${i.toString(36)}`]: `(+(${mapLn(i.toString())}))[${jtoString}](${mapLn('36')})`}); 
   }
-  
 }
-console.log(SIMPLE)
-
+console.log(SIMPLE.z);
