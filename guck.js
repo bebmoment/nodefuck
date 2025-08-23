@@ -45,6 +45,7 @@ const minKeyFinder= (c) => keyFinder(c)[indexFinder(c).indexOf(`${minIndexFinder
 const mapping = (c) => (isNaN(c)) ? `(${SIMPLE[minKeyFinder(c)]}+[])[${fuckedNumbers[minIndexFinder(c)]}]` : `[${SIMPLE[c]}]`;
 
 const balls = (c) => (!isNaN(c)) ? mapping(c) : (c in SIMPLE) ? SIMPLE[c] : Object.assign(SIMPLE, Object.fromEntries([[c, mapping(c)]]))[c]; // BIG SAUCE: map but with a check - improve for numbers please
+// write a new helper that runs the char code if it still isn't found
 const mapLn = (str) => str.split('').map((c) => balls(c)).join('+'); // also the sauce
 const set = new Set(Object.keys(SIMPLE).join(''));
 [...set].map(element => balls(element));
@@ -91,12 +92,10 @@ Object.assign(SIMPLE, {'/': `([][${mapLn('at')}][${mapLn('constructor')}](${mapL
 Object.assign(SIMPLE, {'\\': `([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('return RegExp')})()(${SIMPLE['/']})+[])[${mapLn('1')}]` });
 Object.assign(SIMPLE, {',': `[]+[[]][${mapLn('concat')}]([[]])` });
 
-`([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('try{')}([][${mapLn('at')}][${mapLn('constructor')}](${SIMPLE[',']}))${mapLn('}catch(f){return f}')})())+[]` // epic fail at getting a single quote
-
-document.getElementById('big').textContent = `([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('try{')}([][${mapLn('at')}][${mapLn('constructor')}](${SIMPLE[',']}))${mapLn('}catch(f){return f}')})())+[]` 
+document.getElementById('big').textContent = `([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('return escape')})()(${SIMPLE['\\']}))[${mapLn('2')}]`;
 document.getElementById('evalsTo').textContent = eval(document.getElementById('big').textContent);
-
+Object.assign(SIMPLE, {'C': `([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('return escape')})()(${SIMPLE['\\']}))[${mapLn('2')}]`});
 document.getElementById('output').textContent = JSON.stringify(SIMPLE, null, 4);
 
-
+// ([]['at']['constructor']('return escape')()('\\'))[2]; 
 // console.log(document.getElementById('evalsTo').textContent);
