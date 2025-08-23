@@ -49,19 +49,25 @@ const mapLn = (str) => str.split('').map((c) => balls(c)).join('+'); // also the
 const set = new Set(Object.keys(SIMPLE).join(''));
 [...set].map(element => balls(element));
 // if i got rid of the helper functions' implicit dependence on SIMPLE, these could be less repetitive, because the helper functions are really just string searchers
-// search the word function
+// search 'function at() {\n native code}'
 Object.assign(SIMPLE, {'c': `([][${mapLn('at')}]+[])[${balls(3)}]`});
+Object.assign(SIMPLE, {'{': `([][${mapLn('at')}]+[])[${mapLn(([]['at']+[]).indexOf('{').toString())}]`});
+Object.assign(SIMPLE, {'}': `([][${mapLn('at')}]+[])[${mapLn(([]['at']+[]).indexOf('}').toString())}]`});
+Object.assign(SIMPLE, {'(': `([][${mapLn('at')}]+[])[${mapLn(([]['at']+[]).indexOf('(').toString())}]`});
+Object.assign(SIMPLE, {')': `([][${mapLn('at')}]+[])[${mapLn(([]['at']+[]).indexOf(')').toString())}]`});
+Object.assign(SIMPLE, {' ': `([][${mapLn('at')}]+[])[${mapLn(([]['at']+[]).indexOf(' ').toString())}]`});
 // search '[object Array Iterator]'
 Object.assign(SIMPLE, {'A': `([][${mapLn('entries')}]()+[])[${balls(8)}]`}); // might improve by changing to array constructor access
 Object.assign(SIMPLE, {'[': `([][${mapLn('entries')}]()+[])[${balls(0)}]`});
 Object.assign(SIMPLE, {']': `([][${mapLn('entries')}]()+[])[${mapLn((([]['entries']()+[]).length - 1).toString())}]`});
 Object.assign(SIMPLE, {'o': `([][${mapLn('entries')}]()+[])[${balls(1)}]`});
+Object.assign(SIMPLE, {'j': `([][${mapLn('entries')}]()+[])[${balls(3)}]`});
+Object.assign(SIMPLE, {'b': `([][${mapLn('entries')}]()+[])[${balls(2)}]`});
 // search 'function Boolean()', 'function Number()', 'function Function()', 'function String()'
 Object.assign(SIMPLE, {'B': `((![])[${mapLn('constructor')}]+[])[${balls(9)}]`});
-Object.assign(SIMPLE, {'b': `((+[])[${mapLn('constructor')}]+[])[${mapLn('12')}]`});
 Object.assign(SIMPLE, {'m': `((+[])[${mapLn('constructor')}]+[])[${mapLn('11')}]`});
 Object.assign(SIMPLE, {'F': `([][${mapLn('at')}][${mapLn('constructor')}]+[])[${balls(9)}]`}); // ([]['at']['constructor']+[])[9]
-Object.assign(SIMPLE, {'S': `(([]+[])[${mapLn('constructor')}]+[])[${balls(9)}]`}); // (([]+[])['constructor]+[])[9]
+Object.assign(SIMPLE, {'S': `(([]+[])[${mapLn('constructor')}]+[])[${balls(9)}]`}); // optimize this to optimize everything else
 Object.assign(SIMPLE, {'g': `(([]+[])[${mapLn('constructor')}]+[])[${mapLn('14')}]`});
 
 // sketchy way of getting v and d from native code - hard to access
@@ -73,4 +79,24 @@ for (let i = 10; i < 36; i++) {
     Object.assign(SIMPLE, {[`${i.toString(36)}`]: `(+(${mapLn(i.toString())}))[${jtoString}](${mapLn('36')})`}); 
   }
 }
-console.log(SIMPLE.z);
+const bigTest = `([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('try{String()[normalize(false)]}catch(f){return f}')})()+[])`;
+const bigTest2 = `${bigTest}[${eval(bigTest).indexOf('R')}]`;
+const bigTest3 = `${bigTest}[${eval(bigTest).indexOf('E')}]`;
+
+Object.assign(SIMPLE, {'R': bigTest2, 'E': bigTest3});
+// console.log(`[][${mapLn('at')}][${mapLn('constructor')}]}(${mapLn('return RegExp')})()`)
+
+
+Object.assign(SIMPLE, {'/': `([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('return RegExp')})()()+[])[${mapLn('0')}]`});
+Object.assign(SIMPLE, {'\\': `([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('return RegExp')})()(${SIMPLE['/']})+[])[${mapLn('1')}]` });
+Object.assign(SIMPLE, {',': `[]+[[]][${mapLn('concat')}]([[]])` });
+
+`([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('try{')}([][${mapLn('at')}][${mapLn('constructor')}](${SIMPLE[',']}))${mapLn('}catch(f){return f}')})())+[]` // epic fail at getting a single quote
+
+document.getElementById('big').textContent = `([][${mapLn('at')}][${mapLn('constructor')}](${mapLn('try{')}([][${mapLn('at')}][${mapLn('constructor')}](${SIMPLE[',']}))${mapLn('}catch(f){return f}')})())+[]` 
+document.getElementById('evalsTo').textContent = eval(document.getElementById('big').textContent);
+
+document.getElementById('output').textContent = JSON.stringify(SIMPLE, null, 4);
+
+
+// console.log(document.getElementById('evalsTo').textContent);
