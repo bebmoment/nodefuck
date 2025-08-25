@@ -5,6 +5,8 @@ Node.js HTTP server but written in the worst way possible: JSFuck
 ``fuck.js`` takes a file as input and outputs entire contents as valid but obfuscated Javascript code. Outputs to ``nodefuck.js`` by default \
 ``jsfuck.js`` is the library that ``fuck.js`` depends on; outlining all conversions to JSFuck. \
 Original by [Martin Kleppe et al.](https://github.com/aemkei/jsfuck)
+### guck.js
+My own implementation of jsfuck.js: shorter but not as optimized as the original
 ### nodefuck.js
 Simple Node.js server file written entirely in JSFuck. Default output of ``npm run build``.
 ### server.js
